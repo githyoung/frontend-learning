@@ -7,7 +7,6 @@ addButton.addEventListener("click", (e) => {
   e.preventDefault();
 
   let form = e.target.parentElement;
-
   // upload product image and display
   //   uploadedImage = uploadPic();
 
@@ -34,17 +33,17 @@ addButton.addEventListener("click", (e) => {
   let label = document.createElement("label");
   label.classList.add("switch");
   label.innerHTML =
-    '<input type="checkbox" id="chkbox" checked /><span class="slider round"></span>';
+    `<input type="checkbox" id="chkbox" data-id=${prd.id} class="toggle-switch" checked /><span class="slider round"></span>`;
   status.appendChild(label);
 
   //   // status的狀態還沒存入localStorage
   //   //   想對label switch做addEventListener的動作
-  //   status.addEventListener("click", (e, index) => {
-  //     // let todoItem = e.target.parentElement;
-  //     console.log("e.target: ", e.target.parentElement);
-  //     console.log("e.index: ", index);
-  //     // todoItem.classList.toggle("done");
-  //   });
+    // status.addEventListener("click", (e, index) => {
+      // let todoItem = e.target.parentElement;
+      // console.log("e.target: ", e.target.parentElement);
+      // console.log("e.index: ", index);
+      // todoItem.classList.toggle("done");
+    // });
 
   inertProduct.appendChild(pic);
   inertProduct.appendChild(name);
@@ -53,6 +52,7 @@ addButton.addEventListener("click", (e) => {
 
   // create object
   let product = {
+    id: Date.now(), // 用Date.now()來做id，但不是最佳做法，練習OK
     prdName: prdName,
     prdPrice: prdPrice,
     prdPic: prdPic,
@@ -76,53 +76,42 @@ addButton.addEventListener("click", (e) => {
   table.appendChild(inertProduct);
 });
 
-// switch label
-// let switchButton = document.querySelector(".switch");
-// console.log(switchButton);
-// switchButton.addEventListener(
-//   "click",
-//   function (e) {
-//     console.log("switchButton click");
-//   },
-//   false
-// );
 
 let allPrds = localStorage.getItem("prds");
 if (allPrds != null) {
   allPrdsArr = JSON.parse(allPrds);
   allPrdsArr.forEach((prd) => {
-    let inertProduct = document.createElement("tr");
 
+    let inertProduct = document.createElement("tr");
     let pic = document.createElement("td");
+    let name = document.createElement("td");
+    let price = document.createElement("td");
+    let status = document.createElement("td");
+    let label = document.createElement("label");
+    // 上方 create element 放在一起比較好閱讀, js 順序這樣也是OK的
+
     pic.classList.add("insert-text");
     pic.innerText = prd.prdPic;
 
-    let name = document.createElement("td");
     name.classList.add("insert-text");
     name.innerText = prd.prdName;
 
-    let price = document.createElement("td");
     price.classList.add("insert-text");
     price.innerText = "$NT " + prd.prdPrice;
 
-    let status = document.createElement("td");
-    let label = document.createElement("label");
     label.classList.add("switch");
     label.innerHTML =
-      '<input type="checkbox" id="chkbox" checked /><span class="slider round"></span>';
-    status.appendChild(label);
+      `<input type="checkbox" id="chkbox" data-id=${prd.id} class="toggle-switch" checked /><span class="slider round"></span>`;
 
+    status.appendChild(label);
     inertProduct.appendChild(pic);
     inertProduct.appendChild(name);
     inertProduct.appendChild(price);
     inertProduct.appendChild(status);
-
     table.appendChild(inertProduct);
+
   });
 }
-
-// let switchButton = document.querySelector(".switch");
-// console.log(switchButton);
 
 // upload and display image
 const image_input = document.querySelector("#image-input");
@@ -140,3 +129,17 @@ image_input.addEventListener("change", function () {
 
   reader.readAsDataURL(this.files[0]);
 });
+
+
+// switch label event
+let switchButton = document.querySelectorAll(".toggle-switch");
+for (let i = 0; i < switchButton.length; i++) {
+    switchButton[i].addEventListener(
+    "click",
+    function (e) {
+      console.log("switchButton click");
+      console.log("data-id:", e.target.dataset.id);
+    },
+  );
+}
+
