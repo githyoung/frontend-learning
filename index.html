@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bear Store</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>後台管理介面</h1>
+    </header>
+
+    <form>
+      <!-- <input type="file" id="imput_img" required /> -->
+      <input
+        type="file"
+        id="image-input"
+        accept="image/jpeg, image/png, image/jpg"
+      />
+
+      <input type="number" placeholder="價格" min="0" required />
+      <input type="text" placeholder="商品名稱" required />
+      <!-- <input type="image" placeholder="圖片" /> -->
+      <button type="submit">新增+</button>
+    </form>
+
+    <div id="display-image"></div>
+
+    <br />
+    <section class="products">
+      <table>
+        <tr>
+          <th>圖片</th>
+          <th>價格</th>
+          <th>商品名稱</th>
+          <th>上架狀態</th>
+        </tr>
+      </table>
+    </section>
+
+    <!-- <input type="file" id="imput_img" /> -->
+  </body>
+  <script src="./app.js"></script>
+</html>
